@@ -16,6 +16,7 @@ export default function MovieItem({ movie, genres }) {
       <RightCont>
         <Title>{movie.title}</Title>
         <p>{movie.genre_ids.map((genreId) => '#' + genreId)}</p>
+        <p>{movie.release_date}</p>
       </RightCont>
     </MovieItemWrapper>
   );

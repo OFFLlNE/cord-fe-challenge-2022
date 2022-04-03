@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import * as colors from '../../colors';
-import getMovies from '../../fetcher';
+import { getPopularMovies, searchMovies } from '../../fetcher';
 import movies from './movies';
 import genres from './genres';
 
@@ -10,60 +10,69 @@ import SearchFilters from '../../components/searchfilter';
 import MovieList from '../../components/movielist';
 
 const Discover = () => {
-  const [keyword, setKeyword] = useState('');
-  const [year, setYear] = useState(0);
+  const [keywordSearchInput, setKeywordSearchInput] = useState('');
+  const [yearSearchInput, setYearSearchInput] = useState(0);
   const [results, setResults] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [genreOptions, setGenreOptions] = useState([]);
-  const [ratingOptions, setRatingOptions] = useState([
-    { id: 7.5, name: 7.5 },
-    { id: 8, name: 8 },
-    { id: 8.5, name: 8.5 },
-    { id: 9, name: 9 },
-    { id: 9.5, name: 9.5 },
-    { id: 10, name: 10 },
-  ]);
-  const [languageOptions, setLanguageOptions] = useState([
-    { id: 'GR', name: 'Greek' },
-    { id: 'EN', name: 'English' },
-    { id: 'RU', name: 'Russian' },
-    { id: 'PO', name: 'Polish' },
-  ]);
 
   useEffect(() => {
     setResults(movies.results);
     setGenreOptions(genres);
     setTotalCount(movies.results.length);
-    // getMovies().then((result) => {
+    // getPopularMovies().then((result) => {
     //   // Result actually returns us what we wanted
     // });
   }, []);
 
-  // TODO: Preload and set the popular movies and movie genres when page loads
+  useEffect(() => {
+    // TODO: Sort them by popularity
+    // TODO: Add short delay after typing so we don't ping every time we search
+    // if (keywordSearchInput) {
+    //   searchMovies({ keyword: keywordSearchInput, year: yearSearchInput }).then(
+    //     (movies) => {
+    //       console.log('movies: ', movies);
 
-  // TODO: Update search results based on the keyword and year inputs
+    //       setTotalCount(movies.data.total_results);
+    //       setResults(movies.data.results);
+    //     }
+    //   );
+    // }
+    console.log(
+      'Searching for movies with parameters of: ',
+      keywordSearchInput,
+      yearSearchInput
+    );
+  }, [keywordSearchInput, yearSearchInput]);
+
+  const updateSearchValues = ({ eventId, eventValue }) => {
+    eventId === 'keywordSearchInput'
+      ? setKeywordSearchInput(eventValue)
+      : setYearSearchInput(eventValue);
+  };
 
   return (
     <DiscoverWrapper>
       <MobilePageTitle>Discover</MobilePageTitle>{' '}
       {/* MobilePageTitle should become visible on mobile devices via CSS media queries*/}
       <TotalCount>{totalCount} movies</TotalCount>
+      Current state: {keywordSearchInput} | {yearSearchInput}
       <MovieFilters>
         <SearchFilters
           genres={genreOptions}
-          ratings={ratingOptions}
-          languages={languageOptions}
-          searchMovies={(keyword, year) => this.searchMovies(keyword, year)}
-          onSearch={(e) => {
-            setKeyword(e);
-          }}
+          onSearch={(event) =>
+            updateSearchValues({
+              eventId: event.target.id,
+              eventValue: event.target.value,
+            })
+          }
         />
       </MovieFilters>
       <MovieResults>
         <MovieList
           movies={results || []}
           genres={genreOptions || []}
-          filteringKeyword={keyword}
+          filteringKeyword={keywordSearchInput}
         />
       </MovieResults>
     </DiscoverWrapper>
