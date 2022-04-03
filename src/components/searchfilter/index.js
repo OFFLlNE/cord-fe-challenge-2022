@@ -2,38 +2,34 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import * as colors from '../../colors';
-import ExpandableFilter from '../accordionfilter';
+import AccordionFilter from '../accordionfilter';
 import SearchBar from '../../components/searchbar';
 
 import SearchIcon from '../../images/search-icon-yellow.png';
 import YearIcon from '../../images/year-icon.png';
 
-export default function SearchFilters({
-  genres,
-  ratings,
-  languages,
-  onSearch,
-}) {
+export default function SearchFilters({ genres, onSearch }) {
   return (
     <FiltersWrapper>
       <SearchFiltersCont className="search_inputs_cont" marginBottom>
         <SearchBar
-          id="keyword_search_input"
+          id="keywordSearchInput"
           type="text"
           icon={{ src: SearchIcon, alt: 'Magnifying glass' }}
           placeholder="Search for movies"
           onChange={onSearch}
         />
         <SearchBar
-          id="year_search_input"
+          id="yearSearchInput"
           type="number"
           icon={{ src: YearIcon, alt: 'Calendar icon' }}
           placeholder="Year of release"
+          onChange={onSearch}
         />
       </SearchFiltersCont>
       <SearchFiltersCont>
         <CategoryTitle>Movies</CategoryTitle>
-        {/* TODO: Complete the "AccordionFilter" component and re-use it for all filter categories */}
+        <AccordionFilter genres={genres} />
       </SearchFiltersCont>
     </FiltersWrapper>
   );
