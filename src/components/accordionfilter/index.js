@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Checkbox from '../checkbox';
 
+import * as colors from '../../colors';
+
 const Accordion = ({ title, content }) => {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div className="accordion-item">
-      <div className="accordion-title" onClick={() => setIsActive(!isActive)}>
+    <>
+      <div onClick={() => setIsActive(!isActive)}>
         <AccordionTitleWrapper>
           <AccordionSymbol>{isActive ? '—' : '+'}</AccordionSymbol>
           <AccordionTitle>{title}</AccordionTitle>
         </AccordionTitleWrapper>
       </div>
       {isActive && (
-        <div className="accordion-content">
+        <>
           {content.map((option) => (
             <Checkbox
               key={option.id}
@@ -23,9 +25,9 @@ const Accordion = ({ title, content }) => {
               label={option.name}
             />
           ))}
-        </div>
+        </>
       )}
-    </div>
+    </>
   );
 };
 
@@ -57,30 +59,37 @@ const AccordionFilter = ({ genres }) => {
   ];
 
   return (
-    <div>
-      <div className="accordion">
-        {accordionData.map(({ title, content }) => (
-          <Accordion key={title} title={title} content={content} />
-        ))}
-      </div>
-    </div>
+    <AccordionFilterWrapper>
+      {accordionData.map(({ title, content }) => (
+        <Accordion key={title} title={title} content={content} />
+      ))}
+    </AccordionFilterWrapper>
   );
 };
 
 export default AccordionFilter;
 
+const AccordionFilterWrapper = styled.div`
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
 const AccordionTitleWrapper = styled.strong`
+  color: ${colors.fontColor};
   display: flex;
   font-size: 1.2em;
   cursor: pointer;
 `;
 
 const AccordionTitle = styled.p`
+  color: ${colors.fontColor};
   align-self: center;
   margin: 0;
 `;
 
 const AccordionSymbol = styled.p`
+  color: ${colors.fontColor};
   margin: 0px 10px 0px 0px;
   font-size: 1.3em;
 `;

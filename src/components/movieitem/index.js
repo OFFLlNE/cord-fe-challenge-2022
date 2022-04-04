@@ -1,28 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import * as colors from '../../colors';
 import turningRed from './turningRed.jpeg';
 
 export default function MovieItem({ movie, genres }) {
+  const genreGenerator = (genreArray, availableGenres) => {
+    const decodedGenres = [];
+    genreArray.forEach((genreId) => {
+      availableGenres.filter((obj) => {
+        if (obj.id === genreId) {
+          decodedGenres.push(obj.name);
+        }
+      });
+    });
+
+    return decodedGenres.join(' | ');
+  };
+
   return (
-    // TODO: Complete the MovieItem component
-    // Implement actual poster for each movie
-    // Implement rating
-    // Implement description
     <MovieItemWrapper>
       <LeftCont>
         <Logo src={turningRed} />
       </LeftCont>
       <RightCont>
-        <Title>{movie.title}</Title>
-        <p>{movie.genre_ids.map((genreId) => '#' + genreId)}</p>
-        <p>{movie.release_date}</p>
+        <MovieTitleAndRating>
+          <Title>{movie.title}</Title>
+          <Rating>7.5</Rating>
+        </MovieTitleAndRating>
+        <MovieGenre>{genreGenerator(movie.genre_ids, genres)}</MovieGenre>
+        <MovieDescription>{movie.overview.slice(0, 250)}</MovieDescription>
+        <MovieReleaseDate>{movie.release_date}</MovieReleaseDate>
       </RightCont>
     </MovieItemWrapper>
   );
 }
 
 const MovieItemWrapper = styled.div`
+  display: flex;
   position: relative;
   background-color: white;
   border-radius: 5px;
@@ -36,12 +51,45 @@ const LeftCont = styled.div`
 
 const RightCont = styled.div`
   display: inline-block;
+  margin-left: 20px;
 `;
 
 const Logo = styled.img`
-  width: 70px;
+  display: block;
+  height: 150px;
+`;
+
+const MovieTitleAndRating = styled.div`
+  display: flex;
 `;
 
 const Title = styled.h2`
-  font-size: 1.4;
+  margin 0;
+  margin-right:auto;
+  font-size: 1.4em;
+`;
+
+const Rating = styled.strong`
+  margin 0;
+  color: white;
+  background: ${colors.primaryColor};
+  border-radius: 5px;
+  align-self: self-start;
+  padding: 5px;
+  font-size: 0.9em;
+`;
+
+const MovieGenre = styled.p`
+  margin: 0;
+  font-size: 0.8em;
+  color: ${colors.primaryColor};
+`;
+
+const MovieDescription = styled.p`
+  color: ${colors.fontColor};
+`;
+
+const MovieReleaseDate = styled.p`
+  font-size: 0.7em;
+  color: ${colors.primaryColor};
 `;
