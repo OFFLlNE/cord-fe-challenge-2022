@@ -8,10 +8,10 @@ const Accordion = ({ title, content }) => {
   return (
     <div className="accordion-item">
       <div className="accordion-title" onClick={() => setIsActive(!isActive)}>
-        <div>
-          {isActive ? '-' : '+'}
-          {title}
-        </div>
+        <AccordionTitleWrapper>
+          <AccordionSymbol>{isActive ? '-' : '+'}</AccordionSymbol>
+          <AccordionTitle>{title}</AccordionTitle>
+        </AccordionTitleWrapper>
       </div>
       {isActive && (
         <div className="accordion-content">
@@ -69,3 +69,18 @@ const AccordionFilter = ({ genres }) => {
 };
 
 export default AccordionFilter;
+
+const AccordionTitleWrapper = styled.strong`
+  display: flex;
+  font-size: 1.2em;
+`;
+
+const AccordionTitle = styled.p`
+  align-self: center;
+  margin: 0;
+`;
+
+const AccordionSymbol = styled.p`
+  margin: 0px 10px 0px 0px;
+  font-size: 1.3em;
+`;
