@@ -98,6 +98,9 @@ const MovieFilters = styled.div`
 
 const MobilePageTitle = styled.h1`
   display: none;
+  @media (max-width: 768px) {
+    display: block;
+  }
 `;
 
 const TotalCount = styled.strong`
