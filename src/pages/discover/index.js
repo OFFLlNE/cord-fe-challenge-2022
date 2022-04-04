@@ -98,7 +98,7 @@ const MovieFilters = styled.div`
 
 const MobilePageTitle = styled.h1`
   display: none;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     display: block;
   }
 `;

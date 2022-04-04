@@ -47,14 +47,14 @@ const MobileMenu = styled.img`
   display: none;
   cursor: pointer;
   width: 75px;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     display: inline-block;
   }
 `;
 
 const SideNavBarCont = styled.div`
   position: fixed;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
     transition: transform 0.3s ease-in-out;
   }
