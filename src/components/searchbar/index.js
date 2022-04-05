@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { DebounceInput } from 'react-debounce-input';
 
 import * as colors from '../../colors';
 
@@ -7,12 +8,14 @@ export default function SearchBar({ icon, id, type, placeholder, onChange }) {
   return (
     <InputWrapper className="search_bar_wrapper">
       <img src={icon.src} alt={icon.alt} htmlFor={id} width="25" />
-      <input
+      <DebounceInput
+        minLength={2}
+        debounceTimeout={300}
         type={type}
         id={id}
         onChange={(e) => onChange(e)}
         placeholder={placeholder}
-      />
+      ></DebounceInput>
     </InputWrapper>
   );
 }

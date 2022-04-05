@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import * as colors from '../../colors';
-import turningRed from './turningRed.jpeg';
 
 export default function MovieItem({ movie, genres }) {
   const genreGenerator = (genreArray, availableGenres) => {
@@ -18,10 +17,12 @@ export default function MovieItem({ movie, genres }) {
     return decodedGenres.join(' | ');
   };
 
+  const imageUrl = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
+
   return (
     <MovieItemWrapper>
       <LeftCont>
-        <Logo src={turningRed} />
+        <Logo src={imageUrl} />
       </LeftCont>
       <RightCont>
         <MovieTitleAndRating>
